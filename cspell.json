@@ -1,0 +1,30 @@
+{
+	"version": "0.2",
+	"language": "en",
+	"caseSensitive": false,
+	"words": [
+		"uv",
+		"dongtu",
+		"autoflush",
+		"sessionmaker",
+		"ondelete",
+		"deepseek"
+	],
+	"ignoreWords": [],
+	"ignorePaths": [
+		".venv/**",
+		"node_modules/**",
+		"**/uv.lock",
+		"**/package-lock.json",
+		"**/*.toml",
+		"**/*.lock",
+		".git/**",
+		"**/.python-version"
+	],
+	"ignoreRegExpList": [
+		"/__\\w+__/g",
+		"/0x[0-9a-fA-F]+/g",
+		"/pypi-[A-Za-z0-9._-]+/g"
+	],
+	"flagWords": []
+}
