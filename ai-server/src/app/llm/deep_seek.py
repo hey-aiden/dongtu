@@ -17,6 +17,6 @@ def make_agent(*, tools, system_prompt):
     """每次请求按需构建 agent,绑定当前请求的工具和提示词"""
     return create_agent(
         model=llm,
-        tools=[],
-        system_prompt="",
+        tools=tools,
+        system_prompt=system_prompt,
     )

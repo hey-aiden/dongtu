@@ -8,7 +8,8 @@
 		"autoflush",
 		"sessionmaker",
 		"ondelete",
-		"deepseek"
+		"deepseek",
+		"ainvoke"
 	],
 	"ignoreWords": [],
 	"ignorePaths": [
