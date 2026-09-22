@@ -222,6 +222,31 @@
   background: var(--bg-assistant-bubble);
 }
 
+/* 等待 AI 回复的加载气泡 */
+.message__bubble--pending {
+  animation: bubble-pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes bubble-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+}
+
+/* 请求错误提示条 */
+.chat-error {
+  margin: 0 20px 8px;
+  padding: 8px 12px;
+  border-radius: var(--radius);
+  background: #fdecea;
+  color: #b3261e;
+  font-size: 13px;
+}
+
 /* 底部输入 */
 .message-input {
   display: flex;

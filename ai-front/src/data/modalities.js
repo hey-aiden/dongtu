@@ -34,30 +34,9 @@ export const PLACEHOLDER_REPLY = {
 // 按模态分桶的 mock 会话。结构:
 // { [modalityId]: { conversations: [{ id, title, createdAt, messages }] } }
 export const INITIAL_CONVERSATIONS = {
+  // text 模态已接入后端,初始为空,由 ChatPage 从接口加载真实会话
   text: {
-    conversations: [
-      {
-        id: uid('c'),
-        title: '用 React 写一个聊天组件',
-        createdAt: new Date().toISOString(),
-        messages: [
-          msg('user', '我想用 React 写一个支持多模态切换的 AI 聊天页面,有什么结构建议?'),
-          msg(
-            'assistant',
-            '建议把「模态」作为顶层维度:顶部 tab 切换模态,左侧会话列表和中央消息历史都跟随当前模态。这样不同模态的数据天然隔离,后续接入不同模型也互不干扰。'
-          ),
-        ],
-      },
-      {
-        id: uid('c'),
-        title: '解释一下 react-router',
-        createdAt: new Date().toISOString(),
-        messages: [
-          msg('user', 'react-router 的 Routes 和 Route 有什么区别?'),
-          msg('assistant', 'Routes 是容器,负责匹配当前 URL 并渲染命中的 Route;Route 定义某条路径要渲染的组件。'),
-        ],
-      },
-    ],
+    conversations: [],
   },
   image: {
     conversations: [

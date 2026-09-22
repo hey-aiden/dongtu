@@ -4,6 +4,7 @@ import app.model  # 导入即注册,注册 ORM 模型到 Base.metadata
 from app.api.index import index_router
 from app.db import Base, engine
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 
 @asynccontextmanager
@@ -14,6 +15,15 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(title="ai-server", version="0.0.1", lifespan=lifespan)
+
+# 允许前端(dev 跑在 3000 端口)跨域访问
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000", "http://127.0.0.1:3000"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 app.include_router(index_router, prefix="/dongtu")
 

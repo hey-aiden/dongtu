@@ -20,7 +20,9 @@ router = APIRouter()
 async def create_conversation(body: ConversationCreate, db: DbSession):
     """创建新会话"""
 
-    conv = ConversationModel(conversation_id=uuid4().hex, user_id=body.user_id)
+    conv = ConversationModel(
+        conversation_id=uuid4().hex, user_id=body.user_id, title=body.title
+    )
     db.add(conv)
     # flush:把 INSERT 发给数据库执行(不提交),让 title/created_at 这类 Python 侧 default 生效
     await db.flush()
