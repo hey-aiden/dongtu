@@ -1,5 +1,7 @@
 """聊天业务逻辑:滚动摘要、消息构建、agent 调用、落库"""
 
+import re
+
 from app.llm.deep_seek import llm, make_agent
 from app.model import ConversationModel, MessageHistoryModel
 from app.schemas import MessageRole
@@ -11,6 +13,20 @@ from sqlalchemy.ext.asyncio import AsyncSession
 # 滚动摘要参数
 RECENT_KEEP = 10  # 摘要后保留原文的消息条数(窗口大小)
 SUMMARY_TRIGGER = 30  # 未摘要的消息超过这个数时,触发滚动摘要
+
+# DeepSeek 偶发把结束符 <|end|> 泄漏到正文。stop 参数已从源头拦截,
+# 这里再做一次兜底清理,防止仍有个别变体漏到前端。
+_END_TOKEN_RES = [
+    re.compile(r"<\|end[^|]*\|>", re.IGNORECASE),  # 半角:<|end|>、<|end_of_sentence|>、<|endoftext|>
+    re.compile(r"<｜end[^｜]*｜>"),  # 全角:<｜end▁of▁sentence｜>
+]
+
+
+def _strip_end_tokens(text: str) -> str:
+    """去掉可能泄漏的模型结束符"""
+    for pattern in _END_TOKEN_RES:
+        text = pattern.sub("", text)
+    return text.strip()
 
 
 def _to_langchain_messages(rows: list[MessageHistoryModel]) -> list:
@@ -35,7 +51,7 @@ async def _summarize(
         f"已有摘要:\n{previous_summary}\n\n对话内容:\n{text}"
     )
     result = await llm.ainvoke([HumanMessage(content=prompt)])
-    return result.content
+    return _strip_end_tokens(result.content)
 
 
 async def send_message(db: AsyncSession, conversation_id: str, content: str) -> dict:
@@ -76,7 +92,7 @@ async def send_message(db: AsyncSession, conversation_id: str, content: str) -> 
     # 5. 调 agent
     agent = make_agent(tools=[], system_prompt=system_prompt)
     result = await agent.ainvoke({"messages": messages})
-    ai_content = result["messages"][-1].content
+    ai_content = _strip_end_tokens(result["messages"][-1].content)
 
     # 6. 落库:用户消息 + AI 回复
     db.add(
