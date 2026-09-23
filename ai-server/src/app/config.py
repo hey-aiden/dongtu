@@ -11,6 +11,12 @@ class Settings(BaseSettings):
     api_key_deepseek: str
     model_deepseek: str
     temperature: float
+
+    dashscope_api_key: str
+    host_dashscope: str
+    host_websocket_dashscope: str
+    temperature_dashscope: float
+
     db_url: str
 
 

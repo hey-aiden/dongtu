@@ -32,3 +32,6 @@ class MessageList(BaseModel):
 
     total: int
     items: list[MessageResponse]
+
+class MessagePrompt(BaseModel):
+    content: str

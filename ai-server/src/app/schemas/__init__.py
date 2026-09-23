@@ -2,6 +2,7 @@ from .conversation import ConversationCreate, ConversationList, ConversationResp
 from .message import (
     MessageCreate,
     MessageList,
+    MessagePrompt,
     MessageResponse,
     MessageRole,
 )
@@ -12,6 +13,7 @@ __all__ = [
     "ConversationResponse",
     "MessageCreate",
     "MessageList",
+    "MessagePrompt",
     "MessageResponse",
     "MessageRole",
 ]

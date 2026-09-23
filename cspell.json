@@ -9,7 +9,13 @@
 		"sessionmaker",
 		"ondelete",
 		"deepseek",
-		"ainvoke"
+		"ainvoke",
+		"dashscope",
+		"qwen",
+		"longanhuan",
+		"webscoket",
+		"longanlingxi",
+		"bailian"
 	],
 	"ignoreWords": [],
 	"ignorePaths": [

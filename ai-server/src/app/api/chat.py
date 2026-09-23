@@ -8,8 +8,9 @@ from app.schemas import (
     ConversationResponse,
     MessageCreate,
     MessageList,
+    MessagePrompt,
 )
-from app.services import send_message
+from app.services import send_message, transform_text_audio
 from fastapi import APIRouter, Query
 from sqlalchemy import func, select
 
@@ -91,3 +92,8 @@ async def get_message_list(
         for m in rows
     ]
     return {"total": total, "items": items}
+
+
+@router.post("/message_text_audio")
+def message_text_audio(body: MessagePrompt):
+    return transform_text_audio(prompt=body.content)

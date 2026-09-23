@@ -2,7 +2,7 @@
 
 import re
 
-from app.llm.deep_seek import llm, make_agent
+from app.llm import llm, make_agent
 from app.model import ConversationModel, MessageHistoryModel
 from app.schemas import MessageRole
 from fastapi import HTTPException
@@ -90,7 +90,7 @@ async def send_message(db: AsyncSession, conversation_id: str, content: str) -> 
         system_prompt += f"\n以下是之前对话的摘要:\n{summary}"
 
     # 5. 调 agent
-    agent = make_agent(tools=[], system_prompt=system_prompt)
+    agent = make_agent(llm=llm, tools=[], system_prompt=system_prompt)
     result = await agent.ainvoke({"messages": messages})
     ai_content = _strip_end_tokens(result["messages"][-1].content)
 
@@ -111,3 +111,5 @@ async def send_message(db: AsyncSession, conversation_id: str, content: str) -> 
     )
 
     return {"content": ai_content, "role": MessageRole.ai.value}
+
+
