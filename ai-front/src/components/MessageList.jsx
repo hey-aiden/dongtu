@@ -1,6 +1,18 @@
+import { useEffect, useRef } from 'react';
+
 // 中央消息历史。展示当前会话的全部消息,区分 user / assistant。
 // sending:正在等待 AI 回复(显示加载气泡);loading:首次加载会话列表。
 export default function MessageList({ messages, sending = false, loading = false }) {
+  const listRef = useRef(null);
+
+  // 新消息或发送状态变化时,滚动到底部,始终展示最新内容
+  useEffect(() => {
+    const el = listRef.current;
+    if (el) {
+      el.scrollTop = el.scrollHeight;
+    }
+  }, [messages.length, sending]);
+
   if (loading) {
     return (
       <div className="message-list message-list--empty">
@@ -18,7 +30,7 @@ export default function MessageList({ messages, sending = false, loading = false
   }
 
   return (
-    <div className="message-list">
+    <div className="message-list" ref={listRef}>
       {messages.map((m) => (
         <div key={m.id} className={`message message--${m.role}`}>
           <div className="message__role" aria-hidden="true">
