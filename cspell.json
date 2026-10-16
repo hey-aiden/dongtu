@@ -15,7 +15,11 @@
 		"longanhuan",
 		"websocket",
 		"longanlingxi",
-		"bailian"
+		"filetrans",
+		"paraformer",
+		"realtime",
+		"bailian",
+		"aiden"
 	],
 	"ignoreWords": [],
 	"ignorePaths": [

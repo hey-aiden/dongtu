@@ -10,8 +10,9 @@ from app.schemas import (
     MessageList,
     MessagePrompt,
 )
-from app.services import send_message, transform_text_audio
-from fastapi import APIRouter, Query
+from app.services import send_message, transform_audio_text
+from app.utils import log_info
+from fastapi import APIRouter, File, Query, UploadFile
 from sqlalchemy import func, select
 
 router = APIRouter()
@@ -96,4 +97,10 @@ async def get_message_list(
 
 @router.post("/message_text_audio")
 def message_text_audio(body: MessagePrompt):
-    return transform_text_audio(prompt=body.content)
+    log_info("调用 message_text_audio 接口", "temp")
+    # return transform_text_audio(prompt=body.content)
+
+
+@router.post("/message_audio_text")
+def message_audio_text(file: UploadFile = File(...)):
+    return transform_audio_text(file=file)

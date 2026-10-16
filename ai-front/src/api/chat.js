@@ -44,3 +44,10 @@ export function listMessages(conversationId, page = 1, pageSize = 100) {
     params: { conversation_id: conversationId, page, page_size: pageSize },
   });
 }
+
+// 上传语音文件转写,返回 { content }
+export function transcribeAudio(file) {
+  const form = new FormData();
+  form.append('file', file);
+  return client.post('/ai-chat/message_audio_text', form);
+}

@@ -13,12 +13,14 @@ import {
   listConversations,
   sendMessage,
   listMessages,
+  transcribeAudio,
   ROLE_TO_FRONT,
 } from '../api/chat';
 import ModalityTabs from '../components/ModalityTabs';
 import ConversationSidebar from '../components/ConversationSidebar';
 import MessageList from '../components/MessageList';
 import MessageInput from '../components/MessageInput';
+import AudioUpload from '../components/AudioUpload';
 import './ChatPage.css';
 
 // 每个模态默认选中的会话(取各自第一条)。text 初始为空,后续由后端填充。
@@ -151,6 +153,40 @@ export default function ChatPage() {
     }
   };
 
+  const handleAudioUpload = async (file) => {
+    let convId = activeConversationId;
+    if (!convId) {
+      const conv = createEmptyConversation();
+      convId = conv.id;
+      updateConversations((list) => [conv, ...list]);
+      setActive(conv.id);
+    }
+
+    // 乐观追加用户消息(文件名),再等转写结果
+    const userMsg = createMessage('user', file.name, activeModality);
+    updateConversations((list) =>
+      list.map((c) => {
+        if (c.id !== convId) return c;
+        const title = c.messages.length === 0 ? truncateTitle(file.name) : c.title;
+        return { ...c, title, messages: [...c.messages, userMsg] };
+      }),
+    );
+
+    setSending(true);
+    setError('');
+    try {
+      const reply = await transcribeAudio(file);
+      const aiMsg = createMessage('assistant', reply.content, activeModality);
+      updateConversations((list) =>
+        list.map((c) => (c.id === convId ? { ...c, messages: [...c.messages, aiMsg] } : c)),
+      );
+    } catch (e) {
+      setError(e.message);
+    } finally {
+      setSending(false);
+    }
+  };
+
   const handleSend = async (text) => {
     // 非文本模态维持原有 mock 行为
     if (!isText) {
@@ -235,7 +271,11 @@ export default function ChatPage() {
             loading={isText && loadingList}
           />
           {error && <div className="chat-error">{error}</div>}
-          <MessageInput onSend={handleSend} disabled={sending} />
+          {activeModality === 'audio' ? (
+            <AudioUpload onUpload={handleAudioUpload} disabled={sending} />
+          ) : (
+            <MessageInput onSend={handleSend} disabled={sending} />
+          )}
         </main>
       </div>
     </div>

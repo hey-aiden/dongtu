@@ -292,3 +292,45 @@
   opacity: 0.5;
   cursor: not-allowed;
 }
+
+/* 语音上传控件 */
+.audio-upload {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 20px;
+  border-top: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.audio-upload__input {
+  display: none;
+}
+
+.audio-upload__btn {
+  padding: 10px 18px;
+  border: none;
+  border-radius: var(--radius);
+  background: var(--accent);
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.audio-upload__btn:hover:not(:disabled) {
+  filter: brightness(1.05);
+}
+
+.audio-upload__btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.audio-upload__file {
+  font-size: 13px;
+  color: var(--text-secondary);
+  max-width: 240px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
