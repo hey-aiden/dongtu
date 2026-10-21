@@ -10,7 +10,7 @@ from app.schemas import (
     MessageList,
     MessagePrompt,
 )
-from app.services import send_message, transform_audio_text
+from app.services import send_message, transform_audio_text, transform_text_img
 from app.utils import log_info
 from fastapi import APIRouter, File, Query, UploadFile
 from sqlalchemy import func, select
@@ -104,3 +104,9 @@ def message_text_audio(body: MessagePrompt):
 @router.post("/message_audio_text")
 def message_audio_text(file: UploadFile = File(...)):
     return transform_audio_text(file=file)
+
+
+@router.post("/message_text_img")
+def message_text_img(body: MessagePrompt):
+    log_info("调用 message_text_img 接口", "temp")
+    return transform_text_img(prompt=body.content)

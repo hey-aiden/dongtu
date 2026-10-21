@@ -49,5 +49,6 @@ export function listMessages(conversationId, page = 1, pageSize = 100) {
 export function transcribeAudio(file) {
   const form = new FormData();
   form.append('file', file);
-  return client.post('/ai-chat/message_audio_text', form);
+  return client.post("file/upload_file", form)
+  // return client.post('/ai-chat/message_audio_text', form);
 }

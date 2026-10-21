@@ -1,7 +1,8 @@
 """文件上传:保存上传内容到本地目录,返回相对路径"""
 
-from datetime import UTC, datetime
 from pathlib import Path
+
+from app.utils import beijing_now
 
 # 与 TTS 落盘目录保持一致,统一放 output/ 下
 UPLOAD_DIR = Path("upload")
@@ -19,7 +20,7 @@ def save_upload(filename: str, data: bytes) -> str:
     """
     UPLOAD_DIR.mkdir(exist_ok=True)
     basename = Path(filename or "file").name  # 去目录部分,防路径穿越
-    name = f"{datetime.now(UTC).strftime('%Y%m%d_%H%M%S_%f')}_{basename}"
+    name = f"{beijing_now().strftime('%Y%m%d_%H%M%S_%f')}_{basename}"
     dest = UPLOAD_DIR / name
     dest.write_bytes(data)
     return str(dest)

@@ -17,7 +17,9 @@ SUMMARY_TRIGGER = 30  # 未摘要的消息超过这个数时,触发滚动摘要
 # DeepSeek 偶发把结束符 <|end|> 泄漏到正文。stop 参数已从源头拦截,
 # 这里再做一次兜底清理,防止仍有个别变体漏到前端。
 _END_TOKEN_RES = [
-    re.compile(r"<\|end[^|]*\|>", re.IGNORECASE),  # 半角:<|end|>、<|end_of_sentence|>、<|endoftext|>
+    re.compile(
+        r"<\|end[^|]*\|>", re.IGNORECASE
+    ),  # 半角:<|end|>、<|end_of_sentence|>、<|endoftext|>
     re.compile(r"<｜end[^｜]*｜>"),  # 全角:<｜end▁of▁sentence｜>
 ]
 
@@ -81,7 +83,7 @@ async def send_message(db: AsyncSession, conversation_id: str, content: str) -> 
         conv.summarized_count += len(to_summarize)  # 推进标记
 
     # 3. 拼消息列表:所有未摘要的原文 + 当前用户输入(避免压缩滞后时丢上下文)
-    messages = _to_langchain_messages(history[conv.summarized_count:])
+    messages = _to_langchain_messages(history[conv.summarized_count :])
     messages.append(HumanMessage(content=content))
 
     # 4. 系统提示词(带摘要)
