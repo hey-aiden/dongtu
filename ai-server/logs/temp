@@ -18,3 +18,5 @@
 
  2026-10-21 10:11:59 - 文生图模型调用结果: {"status_code": 200, "request_id": "8681406f-6ea1-9a6d-9d66-a496275f6b20", "code": "", "message": "", "output": {"text": null, "finish_reason": null, "choices": [{"finish_reason": "stop", "message": {"role": "assistant", "content": [{"type": "image", "image": "https://dashscope-a717.oss-accelerate.aliyuncs.com/1d/ef/20261021/010b2f0f/8681406f-6ea1-9a6d-9d66-a496275f6b20_qwen_image3_serving_output_0.png?Expires=1792663917&OSSAccessKeyId=LTAI5tPxpiCM2hjmWrFXrym1&Signature=YAWC5PImC%2F4XUCV92dOhH0%2BSubE%3D"}]}}], "audio": null, "rewrite_status": "success"}, "usage": {"input_tokens": 0, "output_tokens": 0, "characters": 0, "output_height": 2400, "output_width": 1792, "input_image_count": 0, "input_image_type": "qima_input_2k", "output_image_count": 1, "output_image_type": "qima_output_2k"}}
 
+ 2026-10-21 10:56:02 - 调用 message_text_img 接口
+
