@@ -1,3 +1,4 @@
+from typing import Annotated
 from uuid import uuid4
 
 from app.db import DbSession
@@ -102,7 +103,12 @@ def message_text_audio(body: MessagePrompt):
 
 
 @router.post("/message_audio_text")
-def message_audio_text(file: UploadFile = File(...)):
+def message_audio_text(file: Annotated[UploadFile, File(...)]):
+    """语音转写:接收上传的音频文件。
+
+    file 用 Annotated[UploadFile, File(...)] 声明,等价于 file: UploadFile = File(...);
+    把 File(...) 放进类型注解里,避免在参数默认值位置调用函数(ruff B008)。
+    """
     return transform_audio_text(file=file)
 
 

@@ -20,3 +20,7 @@
 
  2026-10-21 10:56:02 - 调用 message_text_img 接口
 
+ 2026-10-21 11:44:12 - 调用 bailian_audio_text_file, file_path=/var/folders/66/8qr__2s90cj25yfx11nbwnkm0000gn/T/tmpzyymmj9q.mp3, format=mp3
+
+ 2026-10-21 11:45:26 - 调用 bailian_audio_text_file, file_path=/var/folders/66/8qr__2s90cj25yfx11nbwnkm0000gn/T/tmp7my7om7j.mp3, format=mp3
+

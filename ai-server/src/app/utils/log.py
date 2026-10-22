@@ -1,9 +1,10 @@
-from datetime import UTC, datetime
 from pathlib import Path
+
+from .time import beijing_now
 
 
 def log_info(message: str, file_name: str = "") -> None:
-    now = datetime.now(UTC)
+    now = beijing_now()
     log_dir = Path("logs")
     log_dir.mkdir(exist_ok=True)
 
