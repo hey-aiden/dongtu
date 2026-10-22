@@ -37,7 +37,6 @@ def bailian_audio_text_file(local_file_path: str) -> str:
     需 base64 编码成 data:<mime>;base64,... 形式(≤10MB,建议短音频 ≤5 分钟)。
     """
     fmt = Path(local_file_path).suffix.lstrip(".").lower()  # 拿到音频格式后缀
-    print("fmt: ", fmt)
     mime = _AUDIO_MIME.get(fmt, f"audio/{fmt}")
 
     with open(local_file_path, "rb") as f:

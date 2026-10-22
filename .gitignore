@@ -70,3 +70,4 @@ Thumbs.db
 
 # Local runtime artifacts
 *.log
+logs/
