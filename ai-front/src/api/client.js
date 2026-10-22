@@ -1,7 +1,9 @@
 import axios from 'axios';
 
-// 后端服务地址。dev 下经 CORS 直连;后续改走代理或上环境变量,只需改这一处。
-const BASE_URL = 'http://localhost:8000/dongtu';
+// 后端服务地址。统一走相对路径 /dongtu,由代理层转发到真实后端:
+// - 本地 npm start:CRA 的 proxy 字段把 /dongtu 转发到 http://localhost:8000
+// - Docker/线上:nginx 把 /dongtu 反向代理到 BACKEND_URL 指向的后端
+const BASE_URL = '/dongtu';
 
 const client = axios.create({
   baseURL: BASE_URL,

@@ -1,0 +1,11 @@
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80"
+    environment:
+      # 后端 ai-server 地址,不带末尾斜杠。默认 host.docker.internal 指向宿主机(Mac/Windows)。
+      BACKEND_URL: ${BACKEND_URL:-http://host.docker.internal:8000}
+    restart: unless-stopped
